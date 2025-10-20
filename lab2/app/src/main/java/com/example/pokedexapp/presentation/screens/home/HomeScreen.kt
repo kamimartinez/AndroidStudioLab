@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.example.pokedexapp.domain.model.Pokemon
 import com.example.pokedexapp.presentation.screens.home.components.PokemonListTab
 import com.example.pokedexapp.presentation.screens.home.components.SearchTab
 
@@ -25,6 +26,7 @@ import com.example.pokedexapp.presentation.screens.home.components.SearchTab
 fun HomeScreen(onPokemonClick: (String) -> Unit) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Pokémon List", "Search")
+    val mockPokemonList = remember { Pokemon.getMockData() }
 
     Scaffold(
         topBar = {
@@ -50,7 +52,11 @@ fun HomeScreen(onPokemonClick: (String) -> Unit) {
             }
 
             when (selectedTabIndex) {
-                0 -> PokemonListTab(onPokemonClick = onPokemonClick)
+                0 ->
+                    PokemonListTab(
+                        pokemonList = mockPokemonList,
+                        onPokemonClick = onPokemonClick,
+                    )
                 1 -> SearchTab(onPokemonClick = onPokemonClick)
             }
         }
